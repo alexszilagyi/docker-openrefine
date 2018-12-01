@@ -63,21 +63,10 @@ RUN wget -O - http://download.osgeo.org/proj/proj-4.8.0.tar.gz | tar -xz
 RUN cd ./proj-4.8.0; ./configure && make && make install
 
 # download and "mount" OpenRefine
-RUN wget -O - --no-check-certificate https://github.com/OpenRefine/OpenRefine/archive/master.tar.gz | tar -xz
-RUN mv OpenRefine-master OpenRefine; cd ./OpenRefine ; ant clean build;
+RUN wget -O - --no-check-certificate https://github.com/OpenRefine/OpenRefine/archive/3.1.tar.gz | tar -xz
+RUN mv 3.1 OpenRefine; cd ./OpenRefine ; ant clean build;
 
 RUN apt-get install unzip;
-
-#download extensions
-RUN cd ./OpenRefine/extensions; wget -O - --no-check-certificate https://github.com/giTorto/extraCTU-plugin/archive/master.tar.gz | tar -xz; cd ./extraCTU-plugin-master; ant clean build
-RUN cd ./OpenRefine/extensions; wget -O - --no-check-certificate https://github.com/giTorto/geoXtension/archive/master.tar.gz | tar -xz; cp ./gdal-1.11.0/swig/java/gdal.jar ./geoXtension-master/module/MOD-INF/lib; cd ./geoXtension-master ; ant clean build
-RUN cd ./OpenRefine/extensions; wget -O - --no-check-certificate https://github.com/giTorto/Refine-NER-Extension/archive/master.tar.gz | tar -xz; cd Refine-NER-Extension-master; ant clean build
-RUN cd ./OpenRefine/extensions; \
-    wget -O rdf-extension.tar.gz https://github.com/SpazioDati/grefine-rdf-extension/tarball/export-stream; \
-    tar -xzf rdf-extension.tar.gz && rm rdf-extension.tar.gz; \
-    mv SpazioDati-grefine-rdf-extension-* rdf-extension; \
-    cd ./rdf-extension; \
-    JAVA_TOOL_OPTIONS='-Dfile.encoding=UTF-8' ant build
 
 #setting ldpath
 RUN echo "LD_LIBRARY_PATH=/usr/lib" >> ~/.bashrc && echo "export LD_LIBRARY_PATH" >> ~/.bashrc
