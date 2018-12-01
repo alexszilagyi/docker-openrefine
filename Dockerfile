@@ -1,7 +1,5 @@
 FROM ubuntu:trusty
 
-MAINTAINER: alex1902@gmail.com
-
 RUN groupadd -r mysql && useradd -r -g mysql mysql
 RUN echo debconf shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
 RUN echo debconf shared/accepted-oracle-license-v1-1 seen true | /usr/bin/debconf-set-selections
